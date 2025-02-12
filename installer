@@ -1,0 +1,2 @@
+pyinstaller --onefile --add-data "title.ico;." --icon=title.ico --windowed main.py
+pyinstaller main.spec
