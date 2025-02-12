@@ -6,7 +6,7 @@ from score_calculator import calculate_score
 import os
 import sys
 from ttkbootstrap import Style
-import webbrowser  # 导入 webbrowser 模块
+import webbrowser
 
 chaos_selectable = ["思维矫正", "朝谒", "魂灵朝谒", "授法", "不容拒绝"]
 emergency_selectable = ["信号灯", "劫虚济实", "鸭速公路", "玩具的报复"]
@@ -39,11 +39,9 @@ def create_ui():
     label = tk.Label(root, text="白金杯分数计算器", font=("Segoe UI", 18), pady=20, bg="#f4f4f4", fg="#333")
     label.pack()
 
-    # 创建主容器
     main_frame = tk.Frame(root, bg="#f4f4f4")
     main_frame.pack(fill="both", expand=True)
 
-    # 创建 Canvas 和 滚动条
     frame_container = tk.Frame(main_frame, bg="#f4f4f4")
     frame_container.pack(side="left", fill="both", expand=True)
 
@@ -57,7 +55,6 @@ def create_ui():
     scrollbar.pack(side="right", fill="y")
     canvas.pack(side="left", fill="both", expand=True)
 
-    # 绑定滚动条
     def update_scroll_region():
         """更新滚动区域"""
         scrollable_frame.update_idletasks()
@@ -67,7 +64,7 @@ def create_ui():
         """鼠标滚轮滚动"""
         canvas.yview_scroll(-1 * (event.delta // 120), "units")
 
-    root.bind("<MouseWheel>", _on_mouse_wheel)  # 绑定鼠标滚轮事件
+    root.bind("<MouseWheel>", _on_mouse_wheel)  
     root.after(100, update_scroll_region)
 
     selected_options = []
@@ -125,7 +122,6 @@ def create_ui():
         frame = create_option_frame(option)
         frames.append(frame)
 
-    # 创建右侧输入框区域
     right_frame = tk.Frame(main_frame, bg="#f4f4f4", width=250)
     right_frame.pack(side="right", fill="y")
 
@@ -173,21 +169,17 @@ def create_ui():
             emergency_status
         )
 
-        # 创建自定义窗口显示结果
         result_window = tk.Toplevel(root)
         result_window.title("计算结果")
         result_window.geometry("500x400")
         result_window.configure(bg="#f4f4f4")
 
-        # 结果标题
         result_label = tk.Label(result_window, text="计算结果", font=("Segoe UI", 16, "bold"), bg="#f4f4f4", fg="#333")
         result_label.pack(pady=20)
 
-        # 总分显示，更醒目
         score_label = tk.Label(result_window, text=f"总分: {score}", font=("Segoe UI", 24, "bold"), bg="#f4f4f4", fg="#e74c3c")
         score_label.pack(pady=20)
 
-        # 其他信息
         other_info = (
             f"隐藏怪数量: {entries['隐藏怪'].get()}\n"
             f"藏品: {entries['藏品'].get()}\n"
@@ -203,7 +195,6 @@ def create_ui():
         info_label = tk.Label(result_window, text=other_info, font=("Segoe UI", 12), bg="#f4f4f4", fg="#333")
         info_label.pack(pady=10)
 
-        # 添加关闭按钮
         close_button = tk.Button(result_window, text="关闭", command=result_window.destroy, font=("Segoe UI", 12), bg="#3498db", fg="white")
         close_button.pack(pady=20)
 
@@ -214,9 +205,8 @@ def create_ui():
                                  padx=20, pady=10, bg="#2a8fbd", fg="white")
     calculate_button.grid(row=len(input_fields), column=0, columnspan=2, pady=20)
 
-    # 在底部添加 GitHub 链接
     github_label = tk.Label(root, text="GitHub: https://github.com/SankRea/ScoreCalculation", font=("Segoe UI", 10), fg="blue", bg="#f4f4f4", cursor="hand2")
     github_label.pack(side="bottom", pady=10)
-    github_label.bind("<Button-1>", lambda e: open_github())  # 点击打开 GitHub
+    github_label.bind("<Button-1>", lambda e: open_github())
 
     root.mainloop()
