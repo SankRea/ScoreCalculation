@@ -6,6 +6,7 @@ from score_calculator import calculate_score
 import os
 import sys
 from ttkbootstrap import Style
+import webbrowser  # 导入 webbrowser 模块
 
 chaos_selectable = ["思维矫正", "朝谒", "魂灵朝谒", "授法", "不容拒绝"]
 emergency_selectable = ["信号灯", "劫虚济实", "鸭速公路", "玩具的报复"]
@@ -20,6 +21,10 @@ def resource_path(relative_path):
     except Exception as e:
         print(f"Error in getting resource path: {e}")
         return relative_path
+
+def open_github():
+    """打开 GitHub 页面"""
+    webbrowser.open("https://github.com/SankRea/ScoreCalculation")
 
 def create_ui():
     style = Style(theme='sandstone')
@@ -168,15 +173,50 @@ def create_ui():
             emergency_status
         )
 
-        messagebox.showinfo("计算结果", f"总分: {score}\n隐藏怪数量: {entries['隐藏怪'].get()}\n"
-                                    f"藏品: {entries['藏品'].get()}\n临时招募4星: {entries['临时招募4星'].get()}\n"
-                                    f"临时招募5星: {entries['临时招募5星'].get()}\n临时招募6星: {entries['临时招募6星'].get()}\n"
-                                    f"起始存款: {entries['起始存款'].get()}\n终止存款: {entries['终止存款'].get()}\n"
-                                    f"剩余取款额度: {entries['剩余取款额度'].get()}\n结算页得分: {entries['结算页得分'].get()}")
+        # 创建自定义窗口显示结果
+        result_window = tk.Toplevel(root)
+        result_window.title("计算结果")
+        result_window.geometry("500x400")
+        result_window.configure(bg="#f4f4f4")
+
+        # 结果标题
+        result_label = tk.Label(result_window, text="计算结果", font=("Segoe UI", 16, "bold"), bg="#f4f4f4", fg="#333")
+        result_label.pack(pady=20)
+
+        # 总分显示，更醒目
+        score_label = tk.Label(result_window, text=f"总分: {score}", font=("Segoe UI", 24, "bold"), bg="#f4f4f4", fg="#e74c3c")
+        score_label.pack(pady=20)
+
+        # 其他信息
+        other_info = (
+            f"隐藏怪数量: {entries['隐藏怪'].get()}\n"
+            f"藏品: {entries['藏品'].get()}\n"
+            f"临时招募4星: {entries['临时招募4星'].get()}\n"
+            f"临时招募5星: {entries['临时招募5星'].get()}\n"
+            f"临时招募6星: {entries['临时招募6星'].get()}\n"
+            f"起始存款: {entries['起始存款'].get()}\n"
+            f"终止存款: {entries['终止存款'].get()}\n"
+            f"剩余取款额度: {entries['剩余取款额度'].get()}\n"
+            f"结算页得分: {entries['结算页得分'].get()}"
+        )
+
+        info_label = tk.Label(result_window, text=other_info, font=("Segoe UI", 12), bg="#f4f4f4", fg="#333")
+        info_label.pack(pady=10)
+
+        # 添加关闭按钮
+        close_button = tk.Button(result_window, text="关闭", command=result_window.destroy, font=("Segoe UI", 12), bg="#3498db", fg="white")
+        close_button.pack(pady=20)
+
+        result_window.mainloop()
+
 
     calculate_button = tk.Button(right_frame, text="计算分数", command=calculate_button_click, font=("Segoe UI", 14), 
                                  padx=20, pady=10, bg="#2a8fbd", fg="white")
     calculate_button.grid(row=len(input_fields), column=0, columnspan=2, pady=20)
 
-    root.mainloop()
+    # 在底部添加 GitHub 链接
+    github_label = tk.Label(root, text="GitHub: https://github.com/SankRea/ScoreCalculation", font=("Segoe UI", 10), fg="blue", bg="#f4f4f4", cursor="hand2")
+    github_label.pack(side="bottom", pady=10)
+    github_label.bind("<Button-1>", lambda e: open_github())  # 点击打开 GitHub
 
+    root.mainloop()
