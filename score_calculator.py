@@ -25,6 +25,10 @@ def calculate_score(selected_options, quantity, collection, recruit_4star, recru
                     base_score += 50
                 elif option == "玩具的报复":
                     base_score += 20
+            elif emergency_status[option] == "普通无漏":
+                if option == "鸭速公路":
+                    base_score += 30
+
 
         total_score += base_score
     

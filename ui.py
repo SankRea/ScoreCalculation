@@ -109,13 +109,17 @@ def create_ui():
             frame.chaos_var = chaos_var
 
         if option in emergency_selectable:
-            emergency_var = tk.StringVar(value="普通")
-            emergency_options = ["普通", "紧急"]
+            if option == "鸭速公路":
+                emergency_var = tk.StringVar(value="正常通关")
+                emergency_options = ["正常通关", "普通无漏", "紧急无漏"]
+            else:
+                emergency_var = tk.StringVar(value="无漏通关")
+                emergency_options = ["无漏通关", "紧急无漏"]
+
             emergency_menu = ttk.Combobox(frame, textvariable=emergency_var, values=emergency_options, state="readonly",
-                                           font=("Segoe UI", 12), width=15)
+                                        font=("Segoe UI", 12), width=15)
             emergency_menu.pack(side="right", padx=10)
             frame.emergency_var = emergency_var
-
         return frame
 
     for option in combat_options:
