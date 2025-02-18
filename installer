@@ -1,2 +1,3 @@
+pip install ttkbootstrap -i https://mirrors.aliyun.com/pypi/simple/
 pyinstaller --onefile --add-data "title.ico;." --icon=title.ico --windowed main.py
 pyinstaller main.spec
